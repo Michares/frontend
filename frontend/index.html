@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload Test</title>
+</head>
+<body>
+
+  <h2>File Upload Test</h2>
+
+  <form id="uploadForm" enctype="multipart/form-data">
+    <label for="fileInput">Select File:</label>
+    <input type="file" id="fileInput" name="file" multiple>
+    <button type="button" onclick="uploadFiles()">Upload</button>
+  </form>
+
+  <script>
+    function uploadFiles() {
+      const fileInput = document.getElementById('fileInput');
+      const files = fileInput.files;
+
+      if (files.length === 0) {
+        alert('Please select at least one file.');
+        return;
+      }
+
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i]);
+      }
+
+      // You can use Fetch API or XMLHttpRequest to send the form data to your server.
+      // Example using Fetch API:
+      fetch('http://your-api-url/fishify/upload_picture', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Upload successful:', data);
+        // Handle the response from the server, if needed.
+      })
+      .catch(error => {
+        console.error('Error uploading files:', error);
+      });
+    }
+  </script>
+
+</body>
+</html>
+    
